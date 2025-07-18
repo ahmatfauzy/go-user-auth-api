@@ -16,6 +16,10 @@ type Config struct {
 	DBName         string
 	JWTSecret      string
 	JWTExpireHours int
+	RedisHost      string
+	RedisPort      string
+	RedisPassword  string
+	RedisDB        int
 }
 
 func LoadConfig() *Config {
@@ -32,5 +36,9 @@ func LoadConfig() *Config {
 		DBName:         os.Getenv("DB_NAME"),
 		JWTSecret:      os.Getenv("JWT_SECRET"),
 		JWTExpireHours: expire,
+		RedisHost:      os.Getenv("REDIS_HOST"),
+		RedisPort:      os.Getenv("REDIS_PORT"),
+		RedisPassword:  os.Getenv("REDIS_PASSWORD"),
+		RedisDB:        func() int { v, _ := strconv.Atoi(os.Getenv("REDIS_DB")); return v }(),
 	}
 }

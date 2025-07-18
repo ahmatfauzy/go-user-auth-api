@@ -3,6 +3,7 @@ package usecase
 import (
 	"auth-api/internal/domain"
 	"auth-api/pkg/jwt"
+	"auth-api/pkg/redisclient"
 	"errors"
 	"time"
 
@@ -13,13 +14,15 @@ type authUsecase struct {
 	userRepo       domain.UserRepository
 	jwtSecret      string
 	jwtExpireHours int
+	redis          *redisclient.RedisClient
 }
 
-func NewAuthUsecase(repo domain.UserRepository, secret string, expire int) domain.AuthUseCase {
+func NewAuthUsecase(repo domain.UserRepository, secret string, expire int, redis *redisclient.RedisClient) domain.AuthUseCase {
 	return &authUsecase{
 		userRepo:       repo,
 		jwtSecret:      secret,
 		jwtExpireHours: expire,
+		redis:          redis,
 	}
 }
 
@@ -46,6 +49,10 @@ func (uc *authUsecase) RefreshToken(token string) (string, error) {
 }
 
 func (uc *authUsecase) Logout(token string) error {
-	// add redis
-	return nil
+	claims, err := jwt.ValidateToken(token, uc.jwtSecret)
+	if err != nil {
+		return err
+	}
+	exp := time.Until(time.Unix(claims.ExpiresAt.Unix(), 0))
+	return uc.redis.Set("blacklist:"+token, "1", exp)
 }
