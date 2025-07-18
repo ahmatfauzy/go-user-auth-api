@@ -5,13 +5,25 @@ Register, login, refresh token, logout — all secured with JWT & black-list on 
 ---
 
 ## 🚀 Features
-- RESTful endpoints (`/api/v1/register`, `/login`, `/refresh`, `/logout`, `/profile`)
-- JWT-based stateless auth
-- Token black-listing on Redis (logout)
-- Auto-migrate database schema
-- Clean architecture (domain-driven, layered)
-- MySQL & Redis ready
-- Docker-friendly
+
+- ✅ **RESTful API Endpoints**  
+  Base route: `/api/v1`  
+  Includes: `/register`, `/login`, `/refresh`, `/logout`, `/profile`
+
+- 🔐 **JWT-Based Stateless Authentication**  
+  Secure access using JSON Web Tokens for protected routes.
+
+- 🧹 **Token Blacklisting via Redis**  
+  Implements logout by blacklisting access tokens in Redis.
+
+- 🏗️ **Automatic Database Migration**  
+  Schema auto-migration using GORM on app startup.
+
+- 🧠 **Clean Architecture**  
+  Domain-driven and layered code structure (handler → usecase → repository).
+
+- 🛢️ **MySQL & Redis Ready**  
+  Tested and integrated with MySQL and Redis out of the box.
 
 ---
 
@@ -22,7 +34,7 @@ Register, login, refresh token, logout — all secured with JWT & black-list on 
 | ORM            | GORM                         |
 | DB             | MySQL 8+                     |
 | Cache          | Redis                        |
-| Auth           | JWT (HS256)                  |
+| Auth           | JWT                          |
 | Environment    | `.env`                       |
 | License        | MIT                          |
 
@@ -32,7 +44,7 @@ Register, login, refresh token, logout — all secured with JWT & black-list on 
 
 ### 1. Clone & Install
 ```bash
-git clone https://github.com/yourname/auth-api.git
+git clone https://github.com/ahmatfauzy/go-user-auth-api.git
 cd auth-api
 go mod tidy
 ```
@@ -40,7 +52,6 @@ go mod tidy
 ### 2. Run App
 ```bash
 go run cmd/main.go
-# Server listening on :8080
 ```
 
 ---
@@ -61,7 +72,6 @@ auth-api/
 │   └── redisclient/       
 ├── .env                   
 ├── go.mod
-├── docker-compose.yml
 └── README.md
 ```
 
@@ -71,4 +81,4 @@ We love PRs!
 2. Follow conventional commits & add tests.
 
 ### License
-MIT © 2025
+MIT © [ahmatfauzy](https://github.com/ahmatfauzy/go-user-auth-api?tab=MIT-1-ov-file) 2025
